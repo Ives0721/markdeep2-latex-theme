@@ -1,0 +1,29 @@
+#AuthorList {
+    text-align: center;
+    margin: 0 auto;
+    min-width: min(50%, 400px);
+}
+.affiliation {
+    font-style: italic;
+}
+
+article-abstract {
+    display: block;
+    margin-block: 1em;
+}
+article-abstract::before {
+    content: "Abstract:";
+    font-weight: bold;
+    margin-inline-end: .4em;
+}
+
+bib-list {
+    display: block;
+}
+.csl-left-margin {
+    display: inline-flex;
+    margin-inline-end: 1em;
+}
+.csl-right-inline {
+    display: inline-flex;
+}

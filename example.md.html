@@ -1,27 +1,15 @@
 <meta charset="utf-8">
 <script src="./latex-theme-v2.js"></script>
 <script src="https://morgan3d.github.io/markdeep/2/latest/markdeep2.min.js" markdeep="2"></script>
+<!-- Citation.js: bib file used by <bib-list> and in-text citations -->
+<script>
+	window.citationConfig = {
+		bibFile: "./reference.bib"
+	};
+</script>
+<script src="./bib-citation.js" defer></script>
 <!-- Addition style for author list -->
-<style>
-	#AuthorList {
-		text-align: center;
-		margin: 0 auto;
-		min-width: min(50%, 400px);
-	}
-	.affiliation {
-		font-style: italic;
-	}
-
-	article-abstract {
-		display: block;
-		margin-block: 1em;
-	}
-	article-abstract::before {
-		content: "Abstract:";
-		font-weight: bold;
-		margin-inline-end: .4em;
-	}
-</style>
+<link rel="stylesheet" href="./addon-style.css">
 <plaintext>
 
 
@@ -54,7 +42,7 @@ Lorem ipsum, placeholder or dummy text used in typesetting and graphic design fo
 ## Introduction
 
 This is a simple code migration of the [Markdeep latex theme](https://morgan3d.github.io/markdeep/latest/latex.css), which is currently not capable for [Markdeep 2.0](https://github.com/morgan3d/markdeep/releases/tag/2.00).
-So, I use DeepSeek-v4.1-Flash-1017 to vibe-coding this new `latex-theme-v2.js`.
+So, I use DeepSeek-v4.1-Flash-1017 to vibe-coding this new `latex-theme-v2.js`, and add a simple citation feature (see `bib-citation.js`). This theme also adds a simple style (see `addon-style.css`).
 
 
 ## General syntax
@@ -143,6 +131,25 @@ The render result is:
 
 The image can be referred by `Figure [fig_test1]`, or manually writtern as `[Fig. 1](#fig_test1)` -> [Fig. 1](#fig_test1).
 
-(##) Reference 
+### Citation
 
-[1] K. Saleh, S. Golshan, and R. Zarghami, [Chemical Engineering Science **192**, 1011 (2018)](https://doi.org/10.1016/j.ces.2018.08.028). 
+The simple citation feature is implemented by citation.js. Here is an example: <bib-cite>smith2024, jones2023</bib-cite>, whose syntax is listed below,
+
+```
+<bib-cite>smith2024, jones2023</bib-cite>
+```
+
+Write the citation keys inside `<bib-cite>`, separated by commas (spaces or semicolons work too). A single key is written as `<bib-cite>smith2024</bib-cite>`. The render result would be automatically changed by the "citation-style" selection box at the end of the document.
+
+<!-- References section: DO NOT MODIFY -->
+<section id="references-section">
+    <div class="nonumberh2">References</div>
+    <label for="citation-style">
+        Citation style:
+    </label>
+    <select id="citation-style">
+        <option value="vancouver">Numeric (Vancouver)</option>
+        <option value="apa">Author-Year (APA)</option>
+    </select>
+    <bib-list></bib-list>
+</section>
