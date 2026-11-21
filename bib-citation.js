@@ -46,32 +46,65 @@
 
         // 3. Render bibliography and citations
         function renderCitations() {
+            // A style fallback to Vancouver. Currently only consider the builtin 
+            // `apa` and `vancouver` styles (in en-US).
             const style = styleSelect ? styleSelect.value : "vancouver";
-            // Generate the reference list
             const template = style === "apa" ? "apa" : "vancouver";
-            const bibliographyHTML = cite.format("bibliography", {
-                format: "html",
-                template: template,
-                lang: "en-US"
-            });
-            bibliography.innerHTML = bibliographyHTML;
-            // Build a map from BibTeX IDs to numeric reference numbers
-            const entries = bibliography.querySelectorAll(".csl-entry");
-            const numberMap = {};
-            entries.forEach((entry, index) => {
-                const id = entry.getAttribute("data-csl-entry-id");
-                if (id) {
-                    numberMap[id] = index + 1;
-                }
-            });
-            // Update all in-text citations
-            document.querySelectorAll(".citation").forEach(element => {
-                const keys = element.dataset.cite
+
+            // Number every key by its first appearance in the document. The
+            // map also tells us which entries are actually cited: keys that
+            // never appear stay out of it.
+            const knownIds = new Set(cite.data.map(entry => entry.id));
+            const actualNumberMap = Object.create(null);
+            let actualCiteCount = 1;
+            const citationElements = [...document.querySelectorAll(".citation")];
+            const citationKeys = citationElements.map(element => {
+                // Trim and split the citation keys.
+                const keys = (element.dataset.cite || "")
                     .split(",")
                     .map(key => key.trim())
                     .filter(Boolean);
+                // Only count the first appearance of each key.
+                keys.forEach(key => {
+                    if (knownIds.has(key) && !(key in actualNumberMap)) {
+                        actualNumberMap[key] = actualCiteCount;  // Store the 1st appearance.
+                        actualCiteCount += 1;                    // Increment the count.
+                    }
+                });
+                return keys;
+            });
+
+            // Vancouver keeps the first-appearance order. APA is sorted by
+            // key here; its CSL style sorts the reference list by author.
+            const citedKeys = Object.keys(actualNumberMap);
+            const orderedKeys = style === "vancouver"
+                ? citedKeys.slice().sort(
+                    (a, b) => actualNumberMap[a] - actualNumberMap[b])
+                : citedKeys.slice().sort();
+            const citationOrder = new Map(orderedKeys.map((key, index) => [key, index]));
+            cite.sort((a, b) => {
+                const aOrder = citationOrder.has(a.id) ? citationOrder.get(a.id) : Infinity;
+                const bOrder = citationOrder.has(b.id) ? citationOrder.get(b.id) : Infinity;
+                return aOrder === bOrder ? 0 : aOrder - bOrder;
+            }, false);
+
+            // Render only the cited entries. Passing them in first-appearance
+            // order also makes Vancouver label them 1..N.
+            // Details of the options below can be found in
+            // https://citation.js.org/api/0.3/tutorial-output_formats.html
+            bibliography.innerHTML = cite.format("bibliography", {
+                format: "html",
+                template: template,
+                lang: "en-US",
+                entry: orderedKeys  // Render only the cited entries.
+            });
+
+            // Update all in-text citations
+            citationElements.forEach((element, index) => {
+                const keys = citationKeys[index];
                 if (style === "vancouver") {
-                    const numbers = keys.map(key => numberMap[key]);
+                    // Lookup the actual appearance order.
+                    const numbers = keys.map(key => actualNumberMap[key]);
                     if (numbers.some(number => !number)) {
                         element.textContent = "[Unknown reference]";
                     } else {
@@ -79,6 +112,7 @@
                             "[" + [...new Set(numbers)].join(", ") + "]";
                     }
                 } else {
+                    // Render the APA citation.
                     element.textContent = cite.format("citation", {
                         template: "apa",
                         lang: "en-US",

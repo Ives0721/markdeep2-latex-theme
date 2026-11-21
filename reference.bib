@@ -1,16 +1,36 @@
-@article{smith2024,
-  author  = {Smith, John and Brown, Alice},
-  title   = {A Study of Artificial Intelligence},
-  journal = {Nature},
-  year    = {2024},
-  volume  = {12},
-  pages   = {100--110},
-  doi     = {10.1234/example}
+@inbook{smith2024,
+  author = {Micaiah Smith-Pierce and David Dement and Stephen Ruffin},
+  title = {A High Order Discontinuous Galerkin Navier-Stokes Solver with Grid-Convergent Artificial Viscosity},
+  booktitle = {AIAA SCITECH 2024 Forum},
+  chapter = {},
+  pages = {},
+  doi = {10.2514/6.2024-2176},
+  URL = {https://arc.aiaa.org/doi/abs/10.2514/6.2024-2176},
+  eprint = {https://arc.aiaa.org/doi/pdf/10.2514/6.2024-2176},
+  abstract = { This work presents a high-order discontinuous Galerkin solver for the Navier-Stokes equations on unstructured quad/hex meshes. It addresses two significant barriers to the practical application of high-order DG schemes, namely efficiency and shock capturing. We present an explicit multistage time integration scheme designed to maximize the time step, achieving a 10× increase in diffusion-dominated flows, although the time accuracy is reduced to first order. We also develop a novel, high-order-accurate smoothness-based artificial-viscosity scheme for shock capturing. By formulating the smoothness indicator in a way that is independent of the spatial discretization, this scheme avoids nonphysical oscillations which compromise the formal grid convergence of conventional smoothness indicators. Numerical evidence validates the accuracy of the solver across a range of flight conditions and suggests that performance is competitive with industry-standard solvers for some problems. }
 }
 
-@book{jones2023,
-  author    = {Jones, David},
-  title     = {Introduction to Machine Learning},
-  publisher = {Springer},
-  year      = {2023}
+@incollection{Hagen_1852,
+  title = {{\"U}ber Den {{Druck}} Und Die {{Bewegung}} Des Trocknen {{Sandes}}},
+  author = {{Gotthilf Heinrich Ludwig Hagen}},
+  year = 1852,
+  booktitle = {Bericht über die zur Bekanntmachung geeigneten Verhandlungen der Königl},
+  publisher = {Akademie der Wissenschaften zu Berlin},
+  pages = {35--42}
+}
+
+@article{Allers2020,
+    author = {Allers, Joshua P. and Harvey, Jacob A. and Garzon, Fernando H. and Alam, Todd M.},
+    title = {Machine learning prediction of self-diffusion in Lennard-Jones fluids},
+    journal = {The Journal of Chemical Physics},
+    volume = {153},
+    number = {3},
+    pages = {034102},
+    year = {2020},
+    month = {07},
+    abstract = {Different machine learning (ML) methods were explored for the prediction of self-diffusion in Lennard-Jones (LJ) fluids. Using a database of diffusion constants obtained from the molecular dynamics simulation literature, multiple Random Forest (RF) and Artificial Neural Net (ANN) regression models were developed and characterized. The role and improved performance of feature engineering coupled to the RF model development was also addressed. The performance of these different ML models was evaluated by comparing the prediction error to an existing empirical relationship used to describe LJ fluid diffusion. It was found that the ANN regression models provided superior prediction of diffusion in comparison to the existing empirical relationships.},
+    issn = {0021-9606},
+    doi = {10.1063/5.0011512},
+    url = {https://doi.org/10.1063/5.0011512},
+    eprint = {https://pubs.aip.org/aip/jcp/article-pdf/doi/10.1063/5.0011512/13462086/034102_1_online.pdf},
 }

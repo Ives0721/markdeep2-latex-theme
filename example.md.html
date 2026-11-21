@@ -133,13 +133,16 @@ The image can be referred by `Figure [fig_test1]`, or manually writtern as `[Fig
 
 ### Citation
 
-The simple citation feature is implemented by citation.js. Here is an example: <bib-cite>smith2024, jones2023</bib-cite>, whose syntax is listed below,
+The simple citation feature is implemented by citation.js. Here is an example: <bib-cite>smith2024, Allers2020</bib-cite>, whose syntax is listed below,
 
 ```
-<bib-cite>smith2024, jones2023</bib-cite>
+<bib-cite>smith2024, Allers2020</bib-cite>
 ```
 
 Write the citation keys inside `<bib-cite>`, separated by commas (spaces or semicolons work too). A single key is written as `<bib-cite>smith2024</bib-cite>`. The render result would be automatically changed by the "citation-style" selection box at the end of the document.
+
+After I added the sorting process in `bib-citation.js`, the render result of Vancouver style would be sorted by the appearance order in the article, and the APA style would be sorted by the alphabetical order.
+Unused citation keys would be ignored (e.g. the `Hagen_1852` in `reference.bib`).
 
 <!-- References section: DO NOT MODIFY -->
 <section id="references-section">
